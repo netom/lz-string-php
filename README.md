@@ -20,7 +20,7 @@ and is a 1:1 copy/translation into php.
 
 ### Composer
 ```cmd
-composer require nullpunkt/lz-string-php
+composer require netom/lz-string-php
 ```
 
 ## Changelog
