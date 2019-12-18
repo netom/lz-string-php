@@ -2,3 +2,5 @@
 .idea/
 /vendor
 boilerplate/bower_components
+composer.phar
+.phpunit.result.cache

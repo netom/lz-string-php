@@ -2,54 +2,41 @@
 
 use LZCompressor\LZString as LZString;
 
-class TestLZStringUTF8 extends PHPUnit_Framework_TestCase
+class LZStringUTF16Test extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @dataProvider simpleTextProvider
+     * @param $test
+     * @throws Exception
+     */
+    public function testSimple($test) {
+        $this->assertEquals($test, LZString::decompress(LZString::compress($test)));
+    }
 
     /**
      * @dataProvider simpleTextProvider
      * @param $test
      * @throws Exception
      */
-    public function testUTF8_1Byte($test) {
-        $this->assertEquals($test, LZString::decompress(LZString::compress($test)));
-    }
-
-    /**
-     * @dataProvider twoBytesProvider
-     * @param $test
-     * @throws Exception
-     */
-    public function testUTF8_2Bytes($test) {
-        $this->assertEquals($test, LZString::decompress(LZString::compress($test)));
-    }
-
-    /**
-     * @dataProvider threeBytesProvider
-     * @param $test
-     * @throws Exception
-     */
-    public function testUTF8_3Bytes($test) {
-        $this->assertEquals($test, LZString::decompress(LZString::compress($test)));
-    }
-
-    /**
-     * @dataProvider compressed64Provider
-     * @param $input
-     * @param $expected
-     */
-    public function testDecompressFromBase64($input, $expected) {
-        $this->assertEquals($expected, LZString::decompressFromBase64($input));
+    public function testCompressDecompress64($test) {
+        $this->assertEquals($test, LZString::decompressFromUTF16(LZString::compressToUTF16($test)));
     }
 
     public function simpleTextProvider() {
         return [
-            ['a'],
-            ['A'],
-            ['Aa'],
-            ['AA'],
-            ['ӪӹĆĹ߅œƠيϼϾ'],
-            ['Ӫӹ'],
-            ['AAAAAA']
+            ["Définir les permissions d'écriture (757 ou 775 selon votre système) sur les «sauvegardes», lib',' plugins ',' test 'et les dossiers' tmp '"],
+            ['Tämä osoittaa merkkejä joidenkin aksentti :ä, ö, å'],
+            ['а б в г д е ё ж з и й к л м н о п р с т у ф х ц ч ш щ ъ ы ь э ю я'],
+            ['馜簣襃 䰩かクェぢょ菣 ぽ饧饦褎姌 蟨姚獣禺蛣'],
+            ['متن شگفت انگیز دینجا'],
+            ['+-×º=()<>%'],
+            ['x≜≈∑∏e'],
+            ['∡∟º´|||Δ'],
+            ['(x)μσρzxχ 2'],
+            ['{ }∩∪⊂∈Øℝ'],
+            ["εiy'∫d/dx"],
+            ['αβγδεζηθ'],
+            ['XIVLCD']
         ];
     }
 
@@ -85,12 +72,5 @@ class TestLZStringUTF8 extends PHPUnit_Framework_TestCase
             $testCases[] = array($test);
         }
         return $testCases;
-    }
-
-    public function compressed64Provider() {
-        return [
-            ['BISwNABA7gFghgFwAYGcIFcAOBCIA===', 'Hi, what`s up!'],
-            ['BpA=', 'X']
-        ];
     }
 }
