@@ -1,5 +1,6 @@
 {
     "name": "netom/lz-string-php",
+    "license": "MIT",
     "authors": [
         {
             "name": "Tobias Seipke",
